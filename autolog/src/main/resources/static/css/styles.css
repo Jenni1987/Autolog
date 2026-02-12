@@ -214,3 +214,6 @@ body {
 .activity li {
     margin: 8px 0;
 }
+.txt-danger{
+	color:red;
+}
