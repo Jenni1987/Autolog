@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>AutoLog | Operación</title>
+	    <link rel="stylesheet" th:href="@{/css/styles.css}">
+	</head>
+	<body>
+	
+		<div th:replace="fragments :: headerFragment"></div>
+	
+		<div class="layout">
+	
+			<div th:replace="fragments :: sidebarFragment('operations')"></div>
+	
+	
+		    <main class="content">
+		        <div class="form-card">
+		            <h1 th:text="${operation.id != null} ? 'Editar Operación' : 'Nueva Operación'"></h1>
+					<div class="empty-state"
+					     th:if="${vehicles == null or #lists.isEmpty(vehicles)}">
+
+					    <p><b>No dispone de vehículos asociados</b></p>
+					    <p>Para poder crear una operación, primero debe registrar un vehículo.</p>
+
+					    <a th:href="@{/vehicles/new}" class="btn btn-new">
+					        <span class="icon-plus">+</span> Nuevo Vehículo
+					    </a>
+					</div>
+
+					<form th:if="${vehicles != null and !#lists.isEmpty(vehicles)}"
+					      th:action="@{/operations/save}"
+					      th:object="${operation}"
+					      method="post">
+
+					    <input type="hidden" th:field="*{id}" />
+
+					    <div class="form-group">
+					        <label>Vehículo</label>
+					        <select th:field="*{vehicle.id}" required>
+					            <option value="">Seleccione un vehículo</option>
+					            <option th:each="v : ${vehicles}"
+					                    th:value="${v.id}"
+					                    th:text="${v.brand + ' ' + v.model + ' (' + v.plate + ')'}">
+					            </option>
+					        </select>
+					        <div class="txt-danger"
+					             th:if="${#fields.hasErrors('vehicle')}"
+					             th:errors="*{vehicle}">
+					        </div>
+					    </div>
+
+					    <div class="form-group">
+					        <label>Tipo</label>
+					        <select th:field="*{type}" required>
+					            <option value="">Seleccione tipo</option>
+					            <option th:value="MANTENIMIENTO">Mantenimiento</option>
+					            <option th:value="REPARACION">Reparación</option>
+					            <option th:value="INSPECCION">Inspección</option>
+					        </select>
+					        <div class="txt-danger"
+					             th:if="${#fields.hasErrors('type')}"
+					             th:errors="*{type}">
+					        </div>
+					    </div>
+
+					    <div class="form-group">
+					        <label>Fecha</label>
+					        <input type="date" th:field="*{date}" required>
+					        <div class="txt-danger"
+					             th:if="${#fields.hasErrors('date')}"
+					             th:errors="*{date}">
+					        </div>
+					    </div>
+
+					    <div class="form-group">
+					        <label>Lugar</label>
+					        <input type="text" th:field="*{place}" required>
+					        <div class="txt-danger"
+					             th:if="${#fields.hasErrors('place')}"
+					             th:errors="*{place}">
+					        </div>
+					    </div>
+
+					    <div class="form-group">
+					        <label>Coste (€)</label>
+					        <input type="number" th:field="*{cost}" step="0.01" min="0">
+					        <div class="txt-danger"
+					             th:if="${#fields.hasErrors('cost')}"
+					             th:errors="*{cost}">
+					        </div>
+					    </div>
+
+					    <div class="form-group">
+					        <label>Descripción</label>
+					        <textarea th:field="*{description}"
+					                  class="form-input"
+					                  rows="5"
+					                  placeholder="Descripción de la operación"></textarea>
+					        <div class="txt-danger"
+					             th:if="${#fields.hasErrors('description')}"
+					             th:errors="*{description}">
+					        </div>
+					    </div>
+
+					    <button type="submit" class="btn btn-new">
+					        💾 Guardar
+					    </button>
+					</form>
+		        </div>
+		    </main>
+		</div>
+	</body>
+</html>

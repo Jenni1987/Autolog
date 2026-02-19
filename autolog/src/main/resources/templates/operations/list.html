@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>AutoLog | Operaciones</title>
+	    <link rel="stylesheet" th:href="@{/css/styles.css}">
+	</head>
+	<body>
+	
+		<div th:replace="fragments :: headerFragment"></div>
+	
+		<div class="layout">
+	
+			<div th:replace="fragments :: sidebarFragment('operations')"></div>
+	
+	
+		    <main class="content">
+		        <div class="list-page">
+					
+					<div class="page-header">
+					    <div>
+							<h1>Operaciones</h1>
+							<p class="subtitle">Lista de operaciones de tus vehículos</p>
+					    </div>
+						<a th:href="@{/operations/new}" class="btn btn-new" sec:authorize="hasAuthority('escritura')"><span class="icon-plus">+</span> Nueva Operación</a>
+					</div>
+					
+		            
+		
+		            <div class="table-wrapper">
+		                <table class="table">
+		                    <thead>
+		                        <tr>
+		                            <th>Tipo</th>
+		                            <th>Fecha</th>
+		                            <th>Costo (€)</th>
+		                            <th>Lugar</th>
+		                            <th>Vehículo</th>
+		                            <th>Acciones</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <tr th:each="op : ${operations}">
+		                            <td th:text="${op.type}"></td>
+		                            <td th:text="${op.date}"></td>
+		                            <td th:text="${op.cost}"></td>
+		                            <td th:text="${op.place}"></td>
+		                            <td th:text="${op.vehicle.brand + ' ' + op.vehicle.model + ' (' + op.vehicle.plate + ')'}"></td>
+		                            <td>
+		                                <a th:href="@{/operations/edit/{id}(id=${op.id})}" class="btn btn-edit" sec:authorize="hasAuthority('escritura')">✏ Editar</a>
+		                                <a th:href="@{/operations/delete/{id}(id=${op.id})}" class="btn btn-delete"
+		                                   onclick="return confirm('¿Estás seguro de eliminar esta operación?')" sec:authorize="hasAuthority('escritura')">🗑 Eliminar</a>
+									    <a th:href="@{/documents/new(operationId=${op.id})}" class="btn btn-new" sec:authorize="hasAuthority('escritura')">
+									        <span class="icon-plus">+</span> Añadir Documento
+									    </a>
+		                            </td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+		            </div>
+		        </div>
+		    </main>
+		</div>
+	</body>
+</html>

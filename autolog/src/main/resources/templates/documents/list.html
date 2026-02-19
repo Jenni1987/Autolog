@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>AutoLog | Documentos</title>
+	    <link rel="stylesheet" th:href="@{/css/styles.css}">
+	</head>
+	<body>
+	
+		<div th:replace="fragments :: headerFragment"></div>
+	
+		<div class="layout">
+	
+			<div th:replace="fragments :: sidebarFragment('documents')"></div>
+	
+	
+		    <main class="content">
+		        <div class="list-page">
+					
+					<div class="page-header">
+					    <div>
+							<h1>Documentos</h1>
+							<p class="subtitle">Lista de documentos de tus operaciones</p>
+					    </div>
+						<a th:href="@{/documents/new}" class="btn btn-new" sec:authorize="hasAuthority('escritura')"><span class="icon-plus">+</span> Nuevo Documento</a>
+					</div>
+		
+					<div class="table-wrapper">
+					        <table class="table">
+					            <thead>
+					                <tr>
+					                    <th>Nombre Archivo</th>
+					                    <th>Tipo</th>
+					                    <th>Operación</th>
+					                    <th>Acciones</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					                <tr th:each="doc : ${documents}" sec:authorize="hasAnyAuthority('lectura','escritura')">
+					                    <td th:text="${doc.filename}"></td>
+					                    <td th:text="${doc.type}"></td>
+					                    <td th:text="${doc.operation.type + ' - ' + doc.operation.vehicle.plate}"></td>
+					                    <td>
+					                        <a th:href="@{/documents/view/{id}(id=${doc.id})}" class="btn btn-view" target="_blank" sec:authorize="hasAuthority('escritura')">👁 Ver</a>
+											<a th:href="@{/documents/download/{id}(id=${doc.id})}" class="btn btn-alert" sec:authorize="hasAuthority('escritura')"> ⬇ Descargar</a>
+					                        <a th:href="@{/documents/edit/{id}(id=${doc.id})}" class="btn btn-edit" sec:authorize="hasAuthority('escritura')">✏ Editar</a>
+					                        <a th:href="@{/documents/delete/{id}(id=${doc.id})}" class="btn btn-delete" sec:authorize="hasAuthority('escritura')">🗑 Eliminar</a>
+					                    </td>
+					                </tr>
+					            </tbody>
+					        </table>
+					    </div>
+		        </div>
+		    </main>
+		</div>
+	</body>
+</html>
+

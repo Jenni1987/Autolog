@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>AutoLog | Vehículos</title>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+	<div th:replace="fragments :: headerFragment"></div>
+
+	<div class="layout">
+
+		<div th:replace="fragments :: sidebarFragment('vehicles')"></div>
+
+		<main class="content">
+			<div class="list-page">
+
+				<div class="page-header">
+					<div>
+						<h1>Vehículos</h1>
+						<p class="subtitle">Lista de todos tus vehículos registrados</p>
+					</div>
+
+					<a th:href="@{/vehicles/new}" class="btn btn-new" sec:authorize="hasAuthority('escritura')">
+						<span class="icon-plus">+</span> Nuevo Vehículo
+					</a>
+				</div>
+
+				<div class="table-wrapper">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Marca</th>
+								<th>Modelo</th>
+								<th>Matrícula</th>
+								<th>Fecha de Matriculación</th>
+								<th>Tipo</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="vehicle : ${vehicles}">
+								<td th:text="${vehicle.brand}"></td>
+								<td th:text="${vehicle.model}"></td>
+								<td th:text="${vehicle.plate}"></td>
+								<td th:text="${vehicle.registrationDate}"></td>
+								<td th:text="${vehicle.type}"></td>
+								<td>
+									<a th:href="@{/vehicles/edit/{id}(id=${vehicle.id})}" class="btn btn-edit"
+										sec:authorize="hasAuthority('escritura')">✏ Editar</a>
+
+									<a th:href="@{/vehicles/delete/{id}(id=${vehicle.id})}" class="btn btn-delete"
+										onclick="return confirm('¿Estás seguro?')"
+										sec:authorize="hasAuthority('escritura')">🗑 Eliminar</a>
+
+									<a th:href="@{/operations/new?vehicleId={id}(id=${vehicle.id})}" class="btn btn-new"
+										sec:authorize="hasAuthority('escritura')">
+										<span class="icon-plus">+</span> Añadir Operación
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+
+</html>

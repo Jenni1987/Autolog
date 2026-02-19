@@ -3,38 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>AutoLog | Panel de Control</title>
-
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- TOP BAR -->
-<header class="topbar">
-    <div class="brand">
-        🔧 <strong>AutoLog</strong>
-        <span>Sistema de Gestión de Vehículos</span>
-    </div>
-
-    <div class="user-info">
-        <span th:text="${username}">Usuario</span>
-        <a href="/logout" class="logout">Salir</a>
-    </div>
-</header>
+<!-- HEADER -->
+<div th:replace="fragments :: headerFragment"></div>
 
 <!-- LAYOUT -->
 <div class="layout">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <nav>
-            <a class="active" href="#">📊 Dashboard</a>
-            <a href="/vehicles">🚗 Gestión de Vehículos</a>
-            <a href="/operations">🛠 Gestión de Operaciones</a>
-            <a href="/documents">📄 Documentos</a>
-            <a href="/settings">⚙ Configuración</a>
-        </nav>
-    </aside>
+	<!-- SIDEBAR -->
+	<div th:replace="fragments :: sidebarFragment('dashboard')"></div>
 
     <!-- MAIN CONTENT -->
     <main class="content">
@@ -46,22 +27,32 @@
         <section class="cards">
             <div class="card">
                 <h3>Vehículos registrados</h3>
-                <p class="big">12</p>
+                <p class="big" th:text="${dashboard.vehicleCount}"></p>
             </div>
 
             <div class="card">
-                <h3>Operaciones activas</h3>
-                <p class="big">5</p>
+                <h3>Mantenimientos</h3>
+                <p class="big" th:text="${dashboard.maintenanceCount}"></p>
             </div>
-
+            
             <div class="card">
-                <h3>Alertas</h3>
-                <p class="big warning">2</p>
+                <h3>Reparaciones</h3>
+                <p class="big" th:text="${dashboard.repairCount}"></p>
+            </div>
+            
+            <div class="card">
+                <h3>Inspecciones</h3>
+                <p class="big" th:text="${dashboard.inspectionCount}"></p>
+            </div>
+            
+            <div class="card">
+                <h3>Gasto Anual (<span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span>)</h3>
+                <p class="big warning" th:text="${dashboard.annualCost} + ' €'"></p>
             </div>
 
             <div class="card">
                 <h3>Documentos</h3>
-                <p class="big">34</p>
+                <p class="big" th:text="${dashboard.documentCount}"></p>
             </div>
         </section>
 
@@ -69,15 +60,16 @@
         <section class="panel">
             <h2>Actividad reciente</h2>
             <ul class="activity">
-                <li>✔ Revisión ITV – Vehículo 1234ABC</li>
-                <li>✔ Cambio de aceite – Vehículo 5678DEF</li>
-                <li>⚠ Inspección pendiente – Vehículo 9999XYZ</li>
+                <li th:each="op : ${dashboard.recentOperations}">
+                    <span th:text="${op.type}"></span> – 
+                    Vehículo <span th:text="${op.vehicle.plate}"></span> 
+                    (<span th:text="${op.date}"></span>)
+                </li>
             </ul>
         </section>
 
     </main>
 </div>
 
-<script th:src="@{/js/dashboard.js}"></script>
 </body>
 </html>

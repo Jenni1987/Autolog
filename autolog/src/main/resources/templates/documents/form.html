@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>AutoLog | Documento</title>
+	    <link rel="stylesheet" th:href="@{/css/styles.css}">
+	</head>
+	<body>
+	
+		<div th:replace="fragments :: headerFragment"></div>
+		
+		<div class="layout">
+		
+		    <div th:replace="fragments :: sidebarFragment('documents')"></div>
+		
+		    <main class="content">
+		        <div class="form-card">
+		
+		            <h1 th:text="${document.id != null} ? 'Editar Documento' : 'Nuevo Documento'"></h1>
+		
+		            <div class="empty-state"
+		                 th:if="${operations == null or #lists.isEmpty(operations)}">
+		
+		                <p><b>No dispone de operaciones asociadas a vehículos</b></p>
+		                <p>Para poder adjuntar un documento, primero debe registrar una operación.</p>
+		
+		                <a th:href="@{/operations/new}" class="btn btn-new">
+		                    <span class="icon-plus">+</span> Nueva Operación
+		                </a>
+		            </div>
+		
+		            <form th:if="${operations != null and !#lists.isEmpty(operations)}"
+		                  th:action="${document.id != null} ? 
+		                              @{/documents/edit/{id}(id=${document.id})} : 
+		                              @{/documents/new}"
+		                  th:object="${document}"
+		                  method="post"
+		                  enctype="multipart/form-data">
+		
+		                <input type="hidden" th:field="*{id}" />
+		
+		                <div class="form-group">
+		                    <label>Nombre del documento</label>
+		                    <input type="text" th:field="*{filename}" required>
+		                    <div class="txt-danger"
+		                         th:if="${#fields.hasErrors('filename')}"
+		                         th:errors="*{filename}">
+		                    </div>
+		                </div>
+		
+		                <div class="form-group">
+		                    <label>Operación</label>
+		                    <select name="operationId" required>
+		                        <option value="">Seleccione una operación</option>
+		                        <option th:each="op : ${operations}"
+		                                th:value="${op.id}"
+		                                th:text="${op.type + ' - ' + op.vehicle.brand + ' ' + op.vehicle.model + ' [' + op.vehicle.plate + ']' + ' - ' + op.date}"
+		                                th:selected="${document.operation != null} ? 
+		                                             ${op.id} == ${document.operation.id} : false">
+		                        </option>
+		                    </select>
+		                </div>
+		
+						<div class="form-group">
+						    <label>Archivo (Solo PDF, máximo 10MB)</label>
+						    <input type="file" name="file" accept=".pdf">
+
+						    <small style="color:#64748b;">
+						        Formato permitido: .pdf — Tamaño máximo: 10MB
+						    </small>
+
+						    <div class="txt-danger" th:if="${fileError}" th:text="${fileError}"></div>
+						</div>
+		
+		                <button type="submit" class="btn btn-new">
+		                    💾 Guardar
+		                </button>
+		
+		            </form>
+		
+		        </div>
+		    </main>
+		</div>
+	
+	</body>
+</html>

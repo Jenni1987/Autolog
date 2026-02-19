@@ -1,4 +1,4 @@
-/* RESET */
+/* ===/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -7,9 +7,11 @@
 
 /* BASE */
 body {
-    font-family: "forager", sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
-    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+	background:#487F86;
+	height: 100%;
+	min-height: 100vh;
 }
 
 /* WRAPPER */
@@ -37,13 +39,21 @@ body {
     width: 64px;
     height: 64px;
     margin: 0 auto 1rem;
-    background-color: #2563eb;
+    background-color: #134C65;
     color: white;
     font-size: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.logo-img {
+    max-width: 160px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto 1rem;
+    display: block;
 }
 
 /* TEXT */
@@ -54,7 +64,7 @@ body {
 
 .subtitle {
     font-size: 0.95rem;
-    color: #64748b;
+    color: #487F86;
     margin-bottom: 1.8rem;
 }
 
@@ -80,14 +90,14 @@ input {
 
 input:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: #134C65;
 }
 
 /* BUTTON */
 .btn-primary {
     width: 100%;
     padding: 0.8rem;
-    background-color: #2563eb;
+    background-color: #134C65;
     border: none;
     border-radius: 8px;
     color: white;
@@ -98,7 +108,7 @@ input:focus {
 }
 
 .btn-primary:hover {
-    background-color: #1d4ed8;
+    background-color: #487F86;
 }
 
 /* DEMO */
@@ -112,11 +122,6 @@ input:focus {
 }
 
 /*CSS DEL INDEX*/
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    background: #f6f8fb;
-}
 
 /* TOP BAR */
 .topbar {
@@ -129,10 +134,36 @@ body {
     padding: 0 20px;
 }
 
+.topbar .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .topbar .brand span {
-    display: block;
     font-size: 12px;
     opacity: 0.8;
+}
+
+.topbar .brand img {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-data {
+    display: flex;
+    gap: 6px;
+}
+
+.user-info form {
+    margin-left: 20px;
 }
 
 .logout {
@@ -142,8 +173,9 @@ body {
 
 /* LAYOUT */
 .layout {
-    display: flex;
-    height: calc(100vh - 60px);
+	display: flex;
+	min-height: calc(100vh - 60px); 
+	flex-direction: row;
 }
 
 /* SIDEBAR */
@@ -152,6 +184,9 @@ body {
     background: #ffffff;
     border-right: 1px solid #e5e7eb;
     padding: 20px;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .sidebar a {
@@ -165,7 +200,7 @@ body {
 
 .sidebar a.active,
 .sidebar a:hover {
-    background: #2563eb;
+    background: #134C65;
     color: white;
 }
 
@@ -176,7 +211,7 @@ body {
 }
 
 .subtitle {
-    color: #64748b;
+    color: #000000;
 }
 
 /* CARDS */
@@ -212,8 +247,258 @@ body {
 }
 
 .activity li {
-    margin: 8px 0;
+    margin: 8px 25px;
+	list-style-type: none;
 }
 .txt-danger{
 	color:red;
 }
+
+/* LISTADOS - BASE */
+.list-page {
+    padding: 24px;
+    font-family: 'Inter', sans-serif;
+    background: #f6f8fb;
+	border-radius: 12px;
+}
+
+/* TITULO */
+.list-page h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.list-page .subtitle {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* TABLA */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.table th {
+    background: #134c65;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.table tr:nth-child(even) {
+    background: #f3f4f6;
+}
+
+.table tr:hover {
+    background: #e0e7ff;
+}
+
+/* BOTONES DE ACCION */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 4px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-view {
+    background-color: #2563eb;
+}
+
+.btn-view:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-edit {
+    background-color: #2e8b57;
+}
+
+.btn-edit:hover {
+    background-color: #256f46;
+}
+
+.btn-delete {
+    background-color: #b23a3a;
+}
+
+.btn-delete:hover {
+    background-color: #8f2e2e;
+}
+
+.btn-alert {
+    background-color: #c28a2e;
+}
+
+.btn-alert:hover {
+    background-color: #a87425;
+}
+
+/* CREAR NUEVO */
+.btn-new {
+    background-color: #134c65;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.btn-new:hover {
+    background-color: #134c65;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+}
+
+/* FORM CARD */
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #134C65;
+}
+
+.form-card textarea.form-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-state h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #1e293b;
+}
+
+.empty-state p {
+    color: #64748b;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.empty-state .btn-new {
+    padding: 10px 18px;
+    font-size: 0.95rem;
+}
+
+/* Sub-card dentro del card principal */
+.sub-card {
+    background: #ffffff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	margin-top: 14px;
+}
+
+/* Títulos de sub-card */
+.sub-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+/* Separación de formularios interna */
+.sub-card .form-group {
+    margin-bottom: 14px;
+}
+
+/* Contenedor general de los checkboxes */
+.form-group input[type="checkbox"] {
+    /* Mover el checkbox a la izquierda */
+    margin-right: 8px; /* espacio entre checkbox y texto */
+    vertical-align: middle; /* alineación vertical con el texto */
+}
+
+/* Asegurarse que el texto quede alineado al lado derecho del checkbox */
+.form-group label, 
+.form-group span {
+    vertical-align: middle;
+}
+
+/* Estilo opcional para que los checkboxes tengan un tamaño uniforme */
+.form-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Para los checkbox dentro de roles */
+.form-group div {
+    margin-bottom: 6px; /* separa cada rol */
+}
+
+.icon-plus {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-right: 6px;
+    color: white;
+}
+
+
+

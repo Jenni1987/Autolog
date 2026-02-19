@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+
+	<!-- ========================= -->
+	<!-- HEADER FRAGMENT -->
+	<!-- ========================= -->
+	<div th:fragment="headerFragment">
+		<header class="topbar">
+			<div class="brand">
+				<img th:src="@{/img/logo.png}" alt="AutoLog">
+				<span>Sistema de Gestión de Vehículos</span>
+			</div>
+
+			<div class="user-info">
+			    <div class="user-data">
+			        <span th:text="${user.username}"></span> -
+			        <span th:text="${user.email}"></span>
+			    </div>
+
+			    <form th:action="@{/logout}" method="post" id="logoutForm">
+			        <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logout">Salir</a>
+			    </form>
+			</div>
+		</header>
+	</div>
+
+	<!-- ========================= -->
+	<!-- SIDEBAR FRAGMENT -->
+	<!-- ========================= -->
+	<div th:fragment="sidebarFragment(activePage)">
+		<aside class="sidebar">
+			<nav>
+				<a th:classappend="${activePage=='dashboard'} ? 'active'" th:href="@{/index}">📊 Dashboard</a>
+				<a th:classappend="${activePage=='vehicles'} ? 'active'" th:href="@{/vehicles}"
+					sec:authorize="hasAnyAuthority('lectura','escritura')">🚗 Gestión de Vehículos</a>
+				<a th:classappend="${activePage=='operations'} ? 'active'" th:href="@{/operations}"
+					sec:authorize="hasAnyAuthority('lectura','escritura')">🛠 Gestión de Operaciones</a>
+				<a th:classappend="${activePage=='documents'} ? 'active'" th:href="@{/documents}"
+					sec:authorize="hasAnyAuthority('lectura','escritura')">📄 Documentos</a>
+				<a th:classappend="${activePage=='settings'} ? 'active'" th:href="@{/settings}"
+					sec:authorize="hasAnyAuthority('lectura','escritura', 'basic')">⚙ Configuración</a>
+				<a th:classappend="${activePage=='users'} ? 'active'" th:href="@{/users}"
+					sec:authorize="hasAuthority('admin')">👥 Gestión de Usuarios</a>
+			</nav>
+		</aside>
+	</div>
+
+</body>
+
+</html>
